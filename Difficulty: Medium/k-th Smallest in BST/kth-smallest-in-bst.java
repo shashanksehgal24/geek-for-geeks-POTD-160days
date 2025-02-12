@@ -110,6 +110,7 @@ class Solution {
                 if (--k == 0) return root.data;
                 root = root.right;
             } else {
+                
                 Node pre = root.left;
                 while (pre.right != null && pre.right != root) pre = pre.right;
                 if (pre.right == null) {
@@ -122,6 +123,6 @@ class Solution {
                 }
             }
         }
-        return -1;
+        return 0;
     }
 }
