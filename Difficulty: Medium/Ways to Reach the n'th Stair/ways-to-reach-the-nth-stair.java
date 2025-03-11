@@ -1,0 +1,52 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String[] args) {
+
+        // taking input using Scanner class
+        Scanner sc = new Scanner(System.in);
+
+        // taking total testcases
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+
+            // taking count of stairs
+            int m = sc.nextInt();
+
+            // creating an object of class DynamicProgramming
+            Solution obj = new Solution();
+
+            // calling method countWays() of class
+            // DynamicProgramming
+            System.out.println(obj.countWays(m));
+
+            System.out.println("~");
+        }
+    }
+}
+// } Driver Code Ends
+
+class Solution {
+    int countWays(int n) {
+        if (n <= 1) {
+            return 1; // Base case
+        }
+
+        // Create an array to store the number of ways to reach each step
+        int[] dp = new int[n + 1];
+
+        // Base cases
+        dp[0] = 1; // There's one way to stay at the bottom
+        dp[1] = 1; // Only one way to climb 1 step
+
+        // Fill the dp array
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        return dp[n];
+    }
+}
