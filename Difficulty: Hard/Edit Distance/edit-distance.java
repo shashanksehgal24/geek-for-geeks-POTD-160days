@@ -35,19 +35,22 @@ class Solution {
         for (int i = 0; i <= m; i++) {
             for (int j = 0; j <= n; j++) {
                 if (i == 0) {
-                    dp[i][j] = j; // If s1 is empty, insert all characters of s2
+                    // If s1 is empty, all characters of s2 need to be inserted
+                    dp[i][j] = j;
                 } else if (j == 0) {
-                    dp[i][j] = i; // If s2 is empty, remove all characters of s1
+                    // If s2 is empty, all characters of s1 need to be removed
+                    dp[i][j] = i;
                 } else if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1]; // Characters match, no operation needed
+                    // Characters match, no additional cost
+                    dp[i][j] = dp[i - 1][j - 1];
                 } else {
-                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], // Replace
-                                  Math.min(dp[i][j - 1],       // Insert
-                                           dp[i - 1][j]));     // Remove
+                    // Minimum of insert, remove, or replace
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j], // Remove
+                                    Math.min(dp[i][j - 1], // Insert
+                                             dp[i - 1][j - 1])); // Replace
                 }
             }
         }
-
         return dp[m][n];
     }
 }
