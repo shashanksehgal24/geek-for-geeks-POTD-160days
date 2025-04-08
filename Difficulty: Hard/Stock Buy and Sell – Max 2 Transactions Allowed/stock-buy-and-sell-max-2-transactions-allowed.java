@@ -18,14 +18,33 @@ class Sorting {
 // } Driver Code Ends
 
 class Solution {
-    public static int maxProfit(int[] a) {
-        int b1 = Integer.MAX_VALUE, s1 = 0, b2 = Integer.MAX_VALUE, s2 = 0;
-        for (int p : a) {
-            b1 = Math.min(b1, p);
-            s1 = Math.max(s1, p - b1);
-            b2 = Math.min(b2, p - s1);
-            s2 = Math.max(s2, p - b2);
+    public static int maxProfit(int[] prices) {
+        int n = prices.length;
+        if (n == 0) return 0;
+
+        int[] leftProfit = new int[n];
+        int[] rightProfit = new int[n];
+
+        // Left to right: max profit with one transaction until day i
+        int minPrice = prices[0];
+        for (int i = 1; i < n; i++) {
+            minPrice = Math.min(minPrice, prices[i]);
+            leftProfit[i] = Math.max(leftProfit[i - 1], prices[i] - minPrice);
         }
-        return s2;
+
+        // Right to left: max profit with one transaction from day i to end
+        int maxPrice = prices[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            maxPrice = Math.max(maxPrice, prices[i]);
+            rightProfit[i] = Math.max(rightProfit[i + 1], maxPrice - prices[i]);
+        }
+
+        // Combine the two profits
+        int maxTotalProfit = 0;
+        for (int i = 0; i < n; i++) {
+            maxTotalProfit = Math.max(maxTotalProfit, leftProfit[i] + rightProfit[i]);
+        }
+
+        return maxTotalProfit;
     }
 }
